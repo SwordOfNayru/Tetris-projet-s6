@@ -1,0 +1,19 @@
+{
+  "name": "tetris-projet-s6",
+  "version": "1.0.0",
+  "description": "Projet tetris pour l'ue projet",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwordOfNayru/Tetris-projet-s6.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SwordOfNayru/Tetris-projet-s6/issues"
+  },
+  "homepage": "https://github.com/SwordOfNayru/Tetris-projet-s6#readme"
+}
