@@ -1,8 +1,7 @@
 class Matrix {
-    matrix = [];
+    matrix = []; //Le point d'origine de la matrice est le [0][20] Les données sont stocké comme si la matrice était "couché"
     descColArray = []; //Associe à chaque index de colonne une description 
                        //C'est à dire la hauteur de la colonne, la différence inter colonne gauche, nombre de trou dans la colonne.
-
     constructor(col, row) {
         this.initMatrix(col, row);
     }
