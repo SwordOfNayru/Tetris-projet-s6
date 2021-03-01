@@ -1,19 +1,22 @@
-class Display {
-    canvas: HTMLElement;
+import {Matrix} from "./Matrix";
+import {Piece} from "./Pieces";
 
-    constructor(canvas) {
+class Display {
+    canvas: HTMLElement | null;
+
+    constructor(canvas: string) {
         this.canvas = document.getElementById(canvas);
     }
 
-    async update(matrix, ogP, nP, rP, nbL) {
+    async update(matrix: Matrix, ogP: Piece | null, nP: Piece, rP: Piece, nbL:number) {
         this.printCMDMatrix(matrix, ogP, nP, rP);
     }
 
-    printCMDMatrix(matrix, ogP, nP, rP) {
+    printCMDMatrix(matrix: Matrix, ogP: Piece | null, nP: Piece, rP: Piece) {
         console.log("MATRIX : ");
         matrix.printCmdMatrix();
         console.log("On going piece : ");
-        ogP.printCMD();
+        if(ogP !== null) ogP.printCMD();
         console.log("next piece : ");
         nP.printCMD();
         console.log("Reserve piece : ");

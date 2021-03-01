@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.Game = void 0;
 var Pieces_1 = require("./Pieces");
 var Display_1 = require("./Display");
 var Player_1 = require("./Player");
@@ -57,3 +58,4 @@ var Game = /** @class */ (function () {
     };
     return Game;
 }());
+exports.Game = Game;

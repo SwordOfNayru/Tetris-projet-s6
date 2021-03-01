@@ -1,3 +1,6 @@
+"use strict";
+exports.__esModule = true;
+exports.Matrix = void 0;
 var Matrix = /** @class */ (function () {
     //C'est à dire la hauteur de la colonne, la différence inter colonne gauche, nombre de trou dans la colonne.
     function Matrix(col, row) {
@@ -33,3 +36,4 @@ var Matrix = /** @class */ (function () {
     };
     return Matrix;
 }());
+exports.Matrix = Matrix;

@@ -10,7 +10,7 @@ import {Matrix} from "./Matrix";
 //TODO : Doit pouvoir fonctionner sans interface graphique.
 class Game {
     matrix: Matrix;
-    pieceOnGoing: Piece;
+    pieceOnGoing: Piece | null;
     nextPiece: Piece;
     reservePiece: Piece;
     lastUpdate: number;
@@ -20,7 +20,7 @@ class Game {
     display: Display;
     player: Player;
 
-    constructor(canvas) {
+    constructor(canvas: string) {
 
         //Data toutes les variables lié aux données
         this.matrix = new Matrix(10,20);
@@ -41,17 +41,17 @@ class Game {
     }
 
 
-    loop(timestamp) {
+    loop(timestamp: number) {
         var progress = timestamp - this.lastUpdate;
         
         this.update(progress);
         this.display.printCMDMatrix(this.matrix, this.pieceOnGoing, this.nextPiece, this.reservePiece);
 
         this.lastUpdate = timestamp;
-        window.requestAnimationFrame(() => this.loop(Date.now));
+        window.requestAnimationFrame((t) => this.loop(t));
     }
 
-    update(progress) {
+    update(progress: number) {
         console.log("update");
         if(!this.pause) {
             console.log(this.pieceOnGoing);
@@ -77,3 +77,5 @@ class Game {
         this.pause = true;
     }
 }
+
+export {Game};
