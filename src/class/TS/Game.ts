@@ -3,7 +3,7 @@ import {PieceGenerator} from "./Pieces";
 import {Display} from "./Display";
 import {Player} from "./Player";
 import {Matrix} from "./Matrix";
-
+import { BrowserWindow } from 'electron';
 //Equivalent de la class système. 
 //
 //Avoir le jeu encapsuler dans une class permet d'en lancé plusieurs.
@@ -20,7 +20,7 @@ class Game {
     display: Display;
     player: Player;
 
-    constructor(canvas: string) {
+    constructor(frame: BrowserWindow) {
 
         //Data toutes les variables lié aux données
         this.matrix = new Matrix(10,20);
@@ -34,7 +34,7 @@ class Game {
         //Physique toute les variable lié à la physique du jeu
         this.gravity = 0.1; //Valeurs de distance parcouru par la pièces après une seconde.
         //Affichage
-        this.display = new Display(canvas);
+        this.display = new Display(frame);
 
         //Recupération des contrôles joueurs
         this.player = new Player();
@@ -45,10 +45,10 @@ class Game {
         var progress = timestamp - this.lastUpdate;
         
         this.update(progress);
-        this.display.printCMDMatrix(this.matrix, this.pieceOnGoing, this.nextPiece, this.reservePiece);
+        //this.display.printCMDMatrix(this.matrix, this.pieceOnGoing, this.nextPiece, this.reservePiece);
+        this.display.sendSTR(this.matrix, this.pieceOnGoing, this.nextPiece, this.reservePiece);
 
         this.lastUpdate = timestamp;
-        window.requestAnimationFrame((t) => this.loop(t));
     }
 
     update(progress: number) {
@@ -61,8 +61,8 @@ class Game {
         }
     }
 
-    start() {
-        window.requestAnimationFrame((t) => this.loop(t));
+     async start() {
+        setInterval(() => this.loop(Date.now()),32)
     }
 
     pushNextPiece() {

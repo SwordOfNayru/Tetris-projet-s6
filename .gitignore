@@ -4,3 +4,5 @@ node_modules
 src/*\.js
 src/class/*.js
 src/class/TS/*.js
+build/*
+build

@@ -54,9 +54,8 @@ class Piece {
         this.pos.y = y;
     }
 
-    printCMD(){
-        console.log("Pos  = x : " + this.pos.x + " y : " + this.pos.y);
-        var str = "";
+    print():string {
+        var str = "Pos  = x : " + this.pos.x + " y : " + this.pos.y + "</br>";
         this.partern[this.rotation].forEach(row => {
             row.forEach(col => {
                 if(col) {
@@ -66,9 +65,9 @@ class Piece {
                     str += "[ ] ";
                 }
             });
-            var str = "\n";
+            str += "</br>";
         });
-        console.log(str);
+        return str;
     }
 
 }

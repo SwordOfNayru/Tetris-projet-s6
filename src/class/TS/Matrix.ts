@@ -19,21 +19,21 @@ class Matrix {
         }
     }
 
-    printCmdMatrix() {
-        let str = "Matrix : \n"
+    print():string {
+        var str = "";
         for (let iRow = this.matrix[0].length - 1; iRow >= 0; iRow--) {
             str += "| ";
             for (let iCol = 0; iCol < this.matrix.length; iCol++) {
-                if(this.matrix[iCol][iRow] === null) {
+                if(this.matrix[iCol][iRow] === undefined) {
                     str += "[ ] ";
                 }
                 else {
                     str += "[x] ";
                 }
             }
-            str += "|\n";
+            str += "|</br>";
         }
-        console.log(str);
+        return str;
     }
 
     //Nested class DescColonne qui ne sert que pour Matrix

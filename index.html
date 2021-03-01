@@ -8,5 +8,17 @@
     <div id="Tetris">
 
     </div>
+    <script>
+        const win = new BrowserWindow({
+            width: 800,
+            height: 600,
+            webPreferences: {
+                nodeIntegration: true
+            }
+        });
+
+        win.loadFile('test.html');
+        createWindow();
+    </script>
 </body>
 </html>
