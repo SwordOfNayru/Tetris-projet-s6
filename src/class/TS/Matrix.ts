@@ -1,7 +1,7 @@
 import {Piece} from "./Pieces"
 import {Position} from "./Pieces";
 class Matrix {
-    matrix: Array<Array<Color | undefined>>; //Le point d'origine de la matrice est le [0][20] Les données sont stocké comme si la matrice était "couché"
+    matrix: Array<Array<string | undefined>>; //Le point d'origine de la matrice est le [0][20] Les données sont stocké comme si la matrice était "couché"
     descColArray: Array<DescCol>; //Associe à chaque index de colonne une description 
                        //C'est à dire la hauteur de la colonne, la différence inter colonne gauche, nombre de trou dans la colonne.
     col:number;
@@ -108,6 +108,13 @@ class Matrix {
         });
         return Array;
     }
+
+    register(piece:Piece) {
+        let blocs = piece.getPosBlock();
+        blocs.forEach(bloc => {
+            this.matrix[Math.floor(bloc.x)][Math.floor(bloc.y)] = piece.color;
+        });
+    }
     
 }
 
@@ -117,11 +124,5 @@ interface DescCol {
     hole: number;
 }
 
-interface Color {
-    r:number;
-    g:number;
-    b:number;
-}
 
 export {Matrix};
-export {Color};

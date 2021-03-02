@@ -4,7 +4,6 @@ import {Display} from "./Display";
 import {Player} from "./Player";
 import {Matrix} from "./Matrix";
 import { BrowserWindow, TouchBarSlider } from 'electron';
-import {Color} from "./Matrix";
 //Equivalent de la class système. 
 //
 //Avoir le jeu encapsuler dans une class permet d'en lancé plusieurs.
@@ -17,9 +16,12 @@ class Game {
     lastUpdate: number;
     end: Boolean;
     pause: Boolean;
-    gravity: number;
     display: Display;
     player: Player;
+
+    //config variable
+    gravity: number;
+    blockedMaxTime: number;
 
     constructor() {
 
@@ -34,6 +36,7 @@ class Game {
 
         //Physique toute les variable lié à la physique du jeu
         this.gravity = 0.5; //Valeurs de distance parcouru par la pièces après une seconde.
+        this.blockedMaxTime = 3;//Valeur en seconde avant qu'une pièce soit bloqué
         //Affichage
         this.display = new Display();
 
@@ -60,9 +63,31 @@ class Game {
      * 
      * @param progress Mis à jour du jeux physique
      */
-    update(progress: number) {
+    update(progress: number) { //*Suite de condition encapsuler les actions dans des fonctions
         if(!this.pause) {
-            this.falling(progress);
+            if(!this.isBlocked()){
+                this.falling(progress);
+            } else if(this.register()) { //inscription de la piece
+                //TODO Verification des lignes
+                this.pushNextPiece();
+            } else {
+                this.defeat();
+            }
+        }
+    }
+    defeat() {
+        throw new Error("Method not implemented.");
+    }
+
+    /**
+     * Vérifie que la piece est bloqué
+     * @returns Vrai si la pièce est bloqué. Faux si elle est libre
+     */
+    isBlocked():boolean {
+        if(this.onGoingPiece.blocked > this.blockedMaxTime) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -98,10 +123,25 @@ class Game {
     }
 
     /**
+     * Inscrit la pièce dans la matrice ou active la défaite
+     * @returns Vrai si la pièce est inscrit
+     */
+    register():boolean {
+        if(this.onGoingPiece.pos.y >= 21) {//*Defaite
+            //TODO la défaite
+            return false;
+        } else {//*Inscription
+            this.matrix.register(this.onGoingPiece);
+            return true;
+        }
+        //Echange de la pièce        
+    }
+
+    /**
      * Lance la boucle du jeu
      */
     async start() {
-        this.matrix.matrix[4][5] = {r:255, g:222,b:222};
+        this.matrix.matrix[4][5] = "FFFFFF";
         setInterval(() => this.loop(Date.now()),16)
     }
 
