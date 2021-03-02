@@ -1,13 +1,12 @@
 import {Matrix} from "./Matrix";
 import {Piece} from "./Pieces";
-import { ipcMain } from 'electron';
 import { BrowserWindow } from 'electron';
 
 class Display {
     //canvas: HTMLElement | null;
-    frame:BrowserWindow;
-    constructor(frame:BrowserWindow) {
-        this.frame = frame;
+    frame:BrowserWindow | null;
+    constructor() {
+        this.frame = null;
         //this.canvas = document.getElementById(canvas);
     }
 
@@ -36,7 +35,13 @@ class Display {
     }
 
     sendSTR(matrix: Matrix, ogP: Piece | null, nP: Piece, rP: Piece) {
-        this.frame.webContents.send("content", this.genSTRPrint(matrix, ogP, nP, rP));
+        if(this.frame != null)
+            this.frame.webContents.send("content", this.genSTRPrint(matrix, ogP, nP, rP));
+    }
+
+    jsConsoleLog(object:any) {
+        if(this.frame != null)
+            this.frame.webContents.send("log", object);
     }
 }
 

@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const Game = require("./src/class/TS/Game");
+const game = new Game.Game();
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -28,11 +29,11 @@ app.on('activate', () => {
   }
 })
 
-app.on('browser-window-created', (event, windows) => game(windows))
-
-
-
-function game(w) {
-  const game = new Game.Game(w);
+app.on('browser-window-created', (event, windows) => {
+  game.display.frame = windows;
   game.start();
-}
+})
+
+ipcMain.on('pause', () => {
+  game.pauseGame();
+});

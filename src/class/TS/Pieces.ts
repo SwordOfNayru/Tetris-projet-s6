@@ -1,15 +1,13 @@
-
-
 class Piece {
     partern: Array<Array<Array<boolean>>>; //L'ensemble des paternes d'une piece ==> this.partern[rotation][ligne][colonne]
-    pos:Position = {x:0.0, y:0.0 }; //Soit le coin superieur haut gauche
+    pos:Position = {x:3.0, y:23.0 }; //Soit le coin superieur haut gauche
                                // on définis 2 position la position réel soit la position analogique de la pièce
                                // et la position absolue celle d'une case de la matrice.
                                // pour définir l'emplacement d'affichage : 
                                //    Absolue ==> Réel ==> Affichage
     rotation:number = 0; //La rotation va de 0 a 3. 0 est la position initial 3 celle après 3 rotation vers la droite
     color: string = "FFFFFF"; //Couleur de la piece
-    
+    blocked:number = 0;
     constructor() {
         this.partern =[];
     }
@@ -34,14 +32,17 @@ class Piece {
         return this.rotation;
     }
 
-    getPosBlock() { //Renvoie la postion individuel des blocs en position réèl
+    /**
+     * @returns Renvoie la postion individuel des blocs en position réèl
+     */
+    getPosBlock():Array<Position> {
         let bloc = [];
         for (let iRow = 0; iRow < 4; iRow++) {
             for (let iCol = 0; iCol < 4; iCol++) {
                 if(this.partern[this.rotation][iRow][iCol]) {
                     bloc.push({
-                        'x': (this.pos.x + iCol),
-                        'y': (this.pos.y + iRow),
+                        x: (this.pos.x + iCol),
+                        y: (this.pos.y - iRow),
                     });
                 }  
             }
@@ -50,12 +51,13 @@ class Piece {
     }
 
     modPos(x:number,y:number) {
-        this.pos.x = x;
-        this.pos.y = y;
+        this.pos.x += x;
+        this.pos.y += y;
     }
 
     print():string {
         var str = "Pos  = x : " + this.pos.x + " y : " + this.pos.y + "</br>";
+        str += "blocked : " + this.blocked + "</br>";
         this.partern[this.rotation].forEach(row => {
             row.forEach(col => {
                 if(col) {
@@ -68,6 +70,17 @@ class Piece {
             str += "</br>";
         });
         return str;
+    }
+
+    copy():Piece {
+        var piece = new Piece();
+        piece.partern = this.partern;
+        piece.color = this.color;
+        piece.pos = {x:this.pos.x, y:this.pos.y};
+        piece.rotation = this.rotation;
+        piece.blocked = this.blocked;
+
+        return piece;
     }
 
 }
@@ -324,4 +337,5 @@ interface Position {
 }
 
 export {Piece};
+export {Position};
 export {PieceGenerator};
