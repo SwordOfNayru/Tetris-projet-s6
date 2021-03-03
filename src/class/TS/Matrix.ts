@@ -71,7 +71,6 @@ class Matrix {
         var blocs = this.getAllVerifPos(piece.getPosBlock());
         
         for (let index = 0; index < blocs.length; index++) {
-            console.log(blocs, index);
             if(blocs[index].x < 0 || blocs[index].x >= this.col || blocs[index].y < 0) { //Si le bloc est OOB alors on retourne faux
                 return false;
             }
@@ -122,7 +121,6 @@ class Matrix {
      */
     register(piece:Piece):boolean {
         let blocs = piece.getPosBlock();
-        console.log(blocs);
         for (let i = 0; i < blocs.length; i++) {
             if(Math.floor(blocs[i].y)>this.row-1)
                 return false;

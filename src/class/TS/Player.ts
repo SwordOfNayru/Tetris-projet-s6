@@ -11,7 +11,7 @@ class Player {
             re:false,
             p:false
         }
-        this.repeatTimeMax = 1000;
+        this.repeatTimeMax = 500;
         this.repeatTime = this.repeatTimeMax+1;
     }
     
@@ -64,13 +64,16 @@ class Player {
     }
 
     isMoving(progress:number):string {
-        this.repeatTime += progress;
-        if(this.repeatTime>this.repeatTimeMax) {
-            this.repeatTime = 0;
-            if(this.keys.dL)
-                return "L";
-            if(this.keys.dR)
-                return "R";
+        console.log(this.repeatTime);
+        if(this.keys.dL || this.keys.dR) {
+            this.repeatTime += progress;
+            if(this.repeatTime>this.repeatTimeMax) {
+                this.repeatTime = 0;
+                if(this.keys.dL)
+                    return "L";
+                if(this.keys.dR)
+                    return "R";
+            }
         }
         return "None";
     }
