@@ -19,12 +19,15 @@ class Game {
     display: Display;
     player: Player;
     nbRow:number;
+    canExchange: boolean;
+    varLoop: NodeJS.Timeout | undefined;
 
     //TODO rajout de la gestion de repetition de touche
     //config variable
     gravity: number;
     blockedMaxTime: number;
-    varLoop: NodeJS.Timeout | undefined;
+
+
 
     constructor() {
 
@@ -38,10 +41,12 @@ class Game {
         this.pause = false;
         this.nbRow = 0;
         this.varLoop = undefined;
+        this.canExchange = true;
 
         //Physique toute les variable lié à la physique du jeu
-        this.gravity = 0.5; //Valeurs de distance parcouru par la pièces après une seconde.
+        this.gravity = 1; //Valeurs de distance parcouru par la pièces après une seconde.
         this.blockedMaxTime = 3;//Valeur en seconde avant qu'une pièce soit bloqué
+        
         //Affichage
         this.display = new Display();
 
@@ -71,6 +76,7 @@ class Game {
     update(progress: number) { //*Suite de condition encapsuler les actions dans des fonctions
         if(!this.pause) {
             if(!this.isBlocked()){
+                this.exchange();
                 this.falling(progress);
                 this.moving(progress);
             } else if(this.register()) { //inscription de la piece
@@ -79,6 +85,18 @@ class Game {
             } else {
                 this.defeat();
             }
+        }
+    }
+
+    exchange() {
+        if(this.player.isExchange() && this.canExchange) {
+            this.canExchange = false;
+
+            let piece = this.onGoingPiece;
+            this.onGoingPiece = this.reservePiece;
+            this.reservePiece = piece;
+
+            this.reservePiece.pos = {x:3.0,y:23.0};
         }
     }
     
@@ -216,6 +234,7 @@ class Game {
     pushNextPiece() {
         this.onGoingPiece = this.reservePiece;
         this.reservePiece = PieceGenerator.generatePiece();
+        this.canExchange = true;
         
     }
 

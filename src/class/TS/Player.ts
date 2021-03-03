@@ -6,6 +6,8 @@ class Player {
     repeatTimeRotationMax:number;
     repeatTimeRotation:number;
 
+    //Exchange
+    
     constructor() {
         this.keys = {
             rR:false,
@@ -20,6 +22,7 @@ class Player {
 
         this.repeatTimeRotationMax = 500;
         this.repeatTimeRotation = this.repeatTimeDirectionMax;
+
     }
     
     keyDown(key:string) {
@@ -98,6 +101,10 @@ class Player {
             }
         }
         return "None";
+    }
+
+    isExchange() {
+        return this.keys.re;
     }
 }
 
