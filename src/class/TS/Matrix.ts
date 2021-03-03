@@ -109,11 +109,22 @@ class Matrix {
         return Array;
     }
 
-    register(piece:Piece) {
+    /**
+     * Inscrit une pièce dans la matrice
+     * @param piece La pièce a inscrire
+     * @returns Vrai si la pièce est incrit. Faux si la pièce ne peux être inscrit.
+     */
+    register(piece:Piece):boolean {
         let blocs = piece.getPosBlock();
+        console.log(blocs);
+        for (let i = 0; i < blocs.length; i++) {
+            if(Math.floor(blocs[i].y)>this.row-1)
+                return false;
+        }       
         blocs.forEach(bloc => {
             this.matrix[Math.floor(bloc.x)][Math.floor(bloc.y)] = piece.color;
         });
+        return true;
     }
     
 }

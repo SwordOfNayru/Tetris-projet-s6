@@ -1,6 +1,7 @@
 import {Matrix} from "./Matrix";
 import {Piece} from "./Pieces";
 import { BrowserWindow } from 'electron';
+import {Game} from "./Game";
 
 class Display {
     //canvas: HTMLElement | null;
@@ -34,9 +35,31 @@ class Display {
         return str;
     }
 
+    genGameSTRPrint(game:Game) {
+        var str = "";
+        str += "______MATRIX______</br>";
+        str += game.matrix.print();
+        str += "LIGNES : " + game.nbRow + "</br>";
+        if(game.onGoingPiece != null) {
+            str += "______OG P______</br>";
+            str += game.onGoingPiece.print();
+        }
+        str += "______N P______</br>";
+        str += game.nextPiece.print();
+        str += "______R P______</br>";
+        str += game.reservePiece.print();
+        str += "______Continu_______</br>Continue: "+game.continue+"</br>";
+        return str;
+    }
+
     sendSTR(matrix: Matrix, ogP: Piece | null, nP: Piece, rP: Piece) {
         if(this.frame != null)
             this.frame.webContents.send("content", this.genSTRPrint(matrix, ogP, nP, rP));
+    }
+
+    sendGameSTR(game:Game) {
+        if(this.frame !=null)
+            this.frame.webContents.send("content", this.genGameSTRPrint(game));
     }
 
     jsConsoleLog(object:any) {

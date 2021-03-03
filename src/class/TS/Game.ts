@@ -14,14 +14,16 @@ class Game {
     nextPiece: Piece;
     reservePiece: Piece;
     lastUpdate: number;
-    end: Boolean;
+    continue: Boolean;
     pause: Boolean;
     display: Display;
     player: Player;
+    nbRow:number;
 
     //config variable
     gravity: number;
     blockedMaxTime: number;
+    varLoop: NodeJS.Timeout | undefined;
 
     constructor() {
 
@@ -31,8 +33,10 @@ class Game {
         this.nextPiece = PieceGenerator.generatePiece();
         this.reservePiece = PieceGenerator.generatePiece();
         this.lastUpdate = Date.now(); //Permet d'avoir le temps de la dernière update
-        this.end = true; //tant que true le jeu continue
+        this.continue = true; //tant que true le jeu continue
         this.pause = false;
+        this.nbRow = 0;
+        this.varLoop = undefined;
 
         //Physique toute les variable lié à la physique du jeu
         this.gravity = 0.5; //Valeurs de distance parcouru par la pièces après une seconde.
@@ -54,7 +58,7 @@ class Game {
         this.update(progress);
         //this.display.printCMDMatrix(this.matrix, this.onGoingPiece, this.nextPiece, this.reservePiece);
         //Ligne d'update graphique via la class Display
-        this.display.sendSTR(this.matrix, this.onGoingPiece, this.nextPiece, this.reservePiece);
+        this.display.sendGameSTR(this);
 
         this.lastUpdate = timestamp;
     }
@@ -75,8 +79,15 @@ class Game {
             }
         }
     }
+    
+    /**
+     * Déclare la défaite en arrétant la boucle
+     */
     defeat() {
-        throw new Error("Method not implemented.");
+        this.continue = false;
+        if(this.varLoop != undefined) {
+            clearInterval(this.varLoop);
+        }
     }
 
     /**
@@ -91,6 +102,10 @@ class Game {
         }
     }
 
+    /**
+     * Fait tomber la piece
+     * @param progress nombre de ms entre deux itération de la boucle
+     */
     falling(progress:number) {
 
         //Verification du null de onGoingPiece
@@ -124,25 +139,18 @@ class Game {
 
     /**
      * Inscrit la pièce dans la matrice ou active la défaite
-     * @returns Vrai si la pièce est inscrit
+     * @returns Vrai si la pièce est incrit. Faux si la pièce ne peux être inscrit.
      */
     register():boolean {
-        if(this.onGoingPiece.pos.y >= 21) {//*Defaite
-            //TODO la défaite
-            return false;
-        } else {//*Inscription
-            this.matrix.register(this.onGoingPiece);
-            return true;
-        }
-        //Echange de la pièce        
+        return this.matrix.register(this.onGoingPiece);
     }
 
     /**
      * Lance la boucle du jeu
      */
     async start() {
-        this.matrix.matrix[4][5] = "FFFFFF";
-        setInterval(() => this.loop(Date.now()),16)
+        this.matrix.matrix[4][18] = "FFFFFF";
+        this.varLoop=setInterval(() => this.loop(Date.now()),16)
     }
 
     pauseGame() {
