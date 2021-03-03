@@ -336,6 +336,6 @@ interface Position {
     y:number;
 }
 
-export {Piece};
+export {Piece,O,I,L,J,Z,S,T};
 export {Position};
 export {PieceGenerator};

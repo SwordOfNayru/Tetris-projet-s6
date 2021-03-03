@@ -1,4 +1,4 @@
-import {Piece} from "./Pieces";
+import {Piece,O} from "./Pieces";
 import {PieceGenerator} from "./Pieces";
 import {Display} from "./Display";
 import {Player} from "./Player";
@@ -135,26 +135,58 @@ class Game {
         }
         
     }
-
+    //La direction et la rotation sont gérer dans la même fonction pour économiser une copie de pièce.
+    //La rotation s'effectura toujours après la rotation.
     moving(progress:number) {
         let move = this.player.isMoving(progress);
-        var deltaX = 0;
+        let rotate = this.player.isRotate(progress);
+        let deltaX = 0;
+        let deltaRotation = 0;
         
         let piece = new Piece();
         if(this.onGoingPiece != null) {
             piece = this.onGoingPiece.copy();
         }
 
-        if(move != "none") {    
+        if(move != "None") {    
             //Determine la prochaine possition
             if(move == "L") {
-                deltaX += -1;
+                deltaX = -1;
             } else if(move == "R") {
-                deltaX += 1;
+                deltaX = 1;
             }
 
             if(this.matrix.verifPos(piece, deltaX, 0)) {
                 this.onGoingPiece.modPos(deltaX,0);
+            }
+        }
+
+        //Teste de rotation
+        if(rotate != "None") { //TODO Rajout de l'exclusion des O
+            if(rotate == "L") {
+                deltaRotation = -1;
+            } else if (rotate == "R") {
+                deltaRotation = 1;
+            }
+
+            //?La repétition des lignes n'est pas propres à modifier ?
+            if(this.matrix.verifPos(piece,0,0,deltaRotation)) {
+                if(deltaRotation == -1)
+                    this.onGoingPiece.turnPieceLeft();
+                if(deltaRotation == 1)
+                    this.onGoingPiece.turnPieceRight();
+            } else if (this.matrix.verifPos(piece,1,0)) { //On as pas à changer la rotation car piece à déjà sa rotation de changé
+                if(deltaRotation == -1)
+                    this.onGoingPiece.turnPieceLeft();
+                if(deltaRotation == 1)
+                    this.onGoingPiece.turnPieceRight();   
+                this.onGoingPiece.modPos(1,0);
+            } else if (this.matrix.verifPos(piece,-2,0)) { //Comme au dessus on mets -2 car la piece à ses coordonnée modifier
+                if(deltaRotation == -1)
+                    this.onGoingPiece.turnPieceLeft();
+                if(deltaRotation == 1)
+                    this.onGoingPiece.turnPieceRight();   
+                this.onGoingPiece.modPos(-1,0);
             }
         }
 

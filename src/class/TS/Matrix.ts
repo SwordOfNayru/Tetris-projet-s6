@@ -60,14 +60,20 @@ class Matrix {
      * @param piece La pièce à vérifier.
      * @param dX décalage X
      * @param dY décalage Y
+     * @param dR décalage en Rotation positif droite negatif gauche
      * TODO il manque le décalage de rotation.
      * @returns Vrai si la pièce peux être emboité. Faux si la pièce ne peux pas être emboité.
      * !La vérification ne marche pas sur des chutes superieur à un bloc de distance.
      * !La Piece doit être un clone via la méthode Piece.copy().
      */
-    verifPos(piece:Piece, dX:number, dY:number) {
+    verifPos(piece:Piece, dX:number, dY:number, dR:number = 0) {
         piece.modPos(dX,dY);
-
+        if(dR == 1) {
+            piece.turnPieceRight();
+        } else if(dR == -1) {
+            piece.turnPieceLeft();
+        }
+        
         var blocs = this.getAllVerifPos(piece.getPosBlock());
         
         for (let index = 0; index < blocs.length; index++) {

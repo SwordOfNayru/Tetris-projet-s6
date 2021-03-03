@@ -1,7 +1,11 @@
 class Player {
     keys:Keys;
-    repeatTimeMax:number;
-    repeatTime:number;
+    //Redondance des touches
+    repeatTimeDirectionMax:number;
+    repeatTimeDirection:number;
+    repeatTimeRotationMax:number;
+    repeatTimeRotation:number;
+
     constructor() {
         this.keys = {
             rR:false,
@@ -11,8 +15,11 @@ class Player {
             re:false,
             p:false
         }
-        this.repeatTimeMax = 500;
-        this.repeatTime = this.repeatTimeMax+1;
+        this.repeatTimeDirectionMax = 500;
+        this.repeatTimeDirection = this.repeatTimeDirectionMax;
+
+        this.repeatTimeRotationMax = 500;
+        this.repeatTimeRotation = this.repeatTimeDirectionMax;
     }
     
     keyDown(key:string) {
@@ -42,17 +49,19 @@ class Player {
         switch(key) {
             case "rR":
                 this.keys.rR = false;
+                this.repeatTimeRotation = this.repeatTimeRotationMax;
                 break;
             case "rL":
                 this.keys.rL = false;
+                this.repeatTimeRotation = this.repeatTimeRotationMax;
                 break;
             case "dR":
                 this.keys.dR = false;
-                this.repeatTime = this.repeatTimeMax;
+                this.repeatTimeDirection = this.repeatTimeDirectionMax;
                 break;
             case "dL":
                 this.keys.dL = false;
-                this.repeatTime = this.repeatTimeMax;
+                this.repeatTimeDirection = this.repeatTimeDirectionMax;
                 break;
             case "re":
                 this.keys.re = false;
@@ -64,14 +73,27 @@ class Player {
     }
 
     isMoving(progress:number):string {
-        console.log(this.repeatTime);
         if(this.keys.dL || this.keys.dR) {
-            this.repeatTime += progress;
-            if(this.repeatTime>this.repeatTimeMax) {
-                this.repeatTime = 0;
+            this.repeatTimeDirection += progress;
+            if(this.repeatTimeDirection>this.repeatTimeDirectionMax) {
+                this.repeatTimeDirection = 0;
                 if(this.keys.dL)
                     return "L";
                 if(this.keys.dR)
+                    return "R";
+            }
+        }
+        return "None";
+    }
+
+    isRotate(progress:number):string {
+        if(this.keys.rL || this.keys.rR) {
+            this.repeatTimeRotation += progress;
+            if(this.repeatTimeRotation>this.repeatTimeRotationMax) {
+                this.repeatTimeRotation = 0;
+                if(this.keys.rL)
+                    return "L";
+                if(this.keys.rR)
                     return "R";
             }
         }
