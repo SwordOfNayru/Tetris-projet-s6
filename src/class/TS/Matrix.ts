@@ -1,6 +1,7 @@
 import {Piece} from "./Pieces"
 import {Position} from "./Pieces";
 class Matrix {
+    
     matrix: Array<Array<string | undefined>>; //Le point d'origine de la matrice est le [0][20] Les données sont stocké comme si la matrice était "couché"
     descColArray: Array<DescCol>; //Associe à chaque index de colonne une description 
                        //C'est à dire la hauteur de la colonne, la différence inter colonne gauche, nombre de trou dans la colonne.
@@ -34,20 +35,20 @@ class Matrix {
      * @returns retourne la matrice sous forme de texte
      */
     print():string {
-        var str = "\u00a0\u00a0\u00a0\u00a0\u00a0\u00a00\u00a0\u00a0\u00a01\u00a0\u00a0\u00a02\u00a0\u00a0\u00a03\u00a0\u00a0\u00a04\u00a0\u00a0\u00a05\u00a0\u00a0\u00a06\u00a0\u00a0\u00a07\u00a0\u00a0\u00a08\u00a0\u00a0\u00a09</br>";
+        var str = "\u00a0\u00a0\u00a0\u00a0\u00a00\u00a0\u00a0\u00a01\u00a0\u00a0\u00a02\u00a0\u00a0\u00a03\u00a0\u00a0\u00a04\u00a0\u00a0\u00a05\u00a0\u00a0\u00a06\u00a0\u00a0\u00a07\u00a0\u00a0\u00a08\u00a0\u00a0\u00a09</br>";
         for (let iRow = this.matrix[0].length - 1; iRow >= 0; iRow--) {
             if(iRow < 10) {
                 str += "0"+iRow;
             } else {
                 str += iRow;
             }
-            str += "| ";
+            str += "|\u00a0";
             for (let iCol = 0; iCol < this.matrix.length; iCol++) {
                 if(this.matrix[iCol][iRow] === undefined) {
-                    str += "[ ] ";
+                    str += "[\u00a0]\u00a0";
                 }
                 else {
-                    str += "[x] ";
+                    str += "[x]\u00a0";
                 }
             }
             str += "|</br>";
@@ -135,6 +136,31 @@ class Matrix {
             this.matrix[Math.floor(bloc.x)][Math.floor(bloc.y)] = piece.color;
         });
         return true;
+    }
+
+    detect() {
+        let array = this.getCompleteRow();
+        console.log(array);
+        // if(array.length > 0) {
+        //     for (let i = array.length-1; i >= 0; i--) {
+                
+        //     }
+        // }
+    }
+
+    getCompleteRow():Array<number> {
+        let array = new Array<number>();
+        for (let iRow = 0; iRow < this.row; iRow++) {
+            let flag = true;
+            for (let iCol = 0; iCol < this.col; iCol++) {
+                if(this.matrix[iCol][iRow] == undefined) {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) array.push(iRow);
+        }
+        return array;
     }
     
 }

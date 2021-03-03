@@ -81,6 +81,7 @@ class Game {
                 this.moving(progress);
             } else if(this.register()) { //inscription de la piece
                 //TODO Verification des lignes
+                this.matrix.detect();
                 this.pushNextPiece();
             } else {
                 this.defeat();
