@@ -1,5 +1,7 @@
 class Player {
     keys:Keys;
+    repeatTimeMax:number;
+    repeatTime:number;
     constructor() {
         this.keys = {
             rR:false,
@@ -9,10 +11,11 @@ class Player {
             re:false,
             p:false
         }
+        this.repeatTimeMax = 1000;
+        this.repeatTime = this.repeatTimeMax+1;
     }
     
     keyDown(key:string) {
-        console.log(this.keys);
         switch(key) {
             case "rR":
                 this.keys.rR = true;
@@ -36,7 +39,6 @@ class Player {
     }
 
     keyUp(key:string) {
-        console.log(this.keys);
         switch(key) {
             case "rR":
                 this.keys.rR = false;
@@ -46,9 +48,11 @@ class Player {
                 break;
             case "dR":
                 this.keys.dR = false;
+                this.repeatTime = this.repeatTimeMax;
                 break;
             case "dL":
                 this.keys.dL = false;
+                this.repeatTime = this.repeatTimeMax;
                 break;
             case "re":
                 this.keys.re = false;
@@ -57,6 +61,18 @@ class Player {
                 this.keys.p = false;
                 break;
         }
+    }
+
+    isMoving(progress:number):string {
+        this.repeatTime += progress;
+        if(this.repeatTime>this.repeatTimeMax) {
+            this.repeatTime = 0;
+            if(this.keys.dL)
+                return "L";
+            if(this.keys.dR)
+                return "R";
+        }
+        return "None";
     }
 }
 

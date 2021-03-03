@@ -72,6 +72,7 @@ class Game {
         if(!this.pause) {
             if(!this.isBlocked()){
                 this.falling(progress);
+                this.moving(progress);
             } else if(this.register()) { //inscription de la piece
                 //TODO Verification des lignes
                 this.pushNextPiece();
@@ -103,6 +104,10 @@ class Game {
         }
     }
 
+    //!Il y a beaucoup de vérification qui se fait et un doublons une autre solution pourrait simplifier le calcule.
+    //TODO Trop de calcule pour l'ia a revoir la vérification de la piece
+    //Note rendre la vérification du côté de Matrix plus inteligente en renvoyant l'état de blocage ou en ne générant pas des doublon de bloc
+
     /**
      * Fait tomber la piece
      * @param progress nombre de ms entre deux itération de la boucle
@@ -119,13 +124,6 @@ class Game {
         var sec = progress / 1000; //temps écouler entre deux frames exprimer en seconde
         var calculateDeltaY = -this.gravity * sec
         
-        //Bloc de test a supp
-        var blocs = piece.getPosBlock(); //this.matrix.getAllVerifPos(piece.getPosBlock());
-        this.display.jsConsoleLog(this.matrix.getAllVerifPos(piece.getPosBlock()));
-        this.display.jsConsoleLog(this.onGoingPiece);
-        this.display.jsConsoleLog(blocs);
-
-        //fin bloc de test
         //On verifie la future position       
         if(this.matrix.verifPos(piece,0,calculateDeltaY)) {
             this.onGoingPiece?.modPos(0, calculateDeltaY);
@@ -135,6 +133,31 @@ class Game {
             this.onGoingPiece.pos.y = Math.floor(this.onGoingPiece.pos.y);
             this.onGoingPiece.blocked += sec;
         }
+        
+    }
+
+    moving(progress:number) {
+        let move = this.player.isMoving(progress);
+        var deltaX = 0;
+        
+        let piece = new Piece();
+        if(this.onGoingPiece != null) {
+            piece = this.onGoingPiece.copy();
+        }
+
+        if(move != "none") {    
+            //Determine la prochaine possition
+            if(move == "L") {
+                deltaX += -1;
+            } else if(move == "R") {
+                deltaX += 1;
+            }
+
+            if(this.matrix.verifPos(piece, deltaX, 0)) {
+                this.onGoingPiece.modPos(deltaX,0);
+            }
+        }
+
         
     }
 
@@ -150,7 +173,7 @@ class Game {
      * Lance la boucle du jeu
      */
     async start() {
-        this.matrix.matrix[4][18] = "FFFFFF";
+        ////this.matrix.matrix[4][18] = "FFFFFF";
         this.varLoop=setInterval(() => this.loop(Date.now()),16)
     }
 

@@ -71,8 +71,13 @@ class Matrix {
         var blocs = this.getAllVerifPos(piece.getPosBlock());
         
         for (let index = 0; index < blocs.length; index++) {
-            if(blocs[index].y < this.row) {
-                if(this.matrix[blocs[index].x][blocs[index].y] != undefined || blocs[index].y < 0) {
+            console.log(blocs, index);
+            if(blocs[index].x < 0 || blocs[index].x >= this.col || blocs[index].y < 0) { //Si le bloc est OOB alors on retourne faux
+                return false;
+            }
+
+            if(blocs[index].y < this.row) { //On verifie que le bloc est inbound au niveau de la hauteur si oui il peux être faux.
+                if(this.matrix[blocs[index].x][blocs[index].y] != undefined) {
                     return false;
                 }
             }
@@ -81,7 +86,8 @@ class Matrix {
         return true;
     }
 
-
+    //TODO implementation de la nouvelle methode avec verification par le dessus
+    //Creation d'une interface bloc plus intelligeante ? avec variable audessus ?
     /**
      * 
      * @param blocs Liste des blocs constitutif d'une pièce obtenable par la méthode Piece.getPosBloc()
