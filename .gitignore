@@ -6,3 +6,5 @@ src/class/*.js
 src/class/TS/*.js
 build/*
 build
+main.js
+bumain.js

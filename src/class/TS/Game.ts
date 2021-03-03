@@ -20,6 +20,7 @@ class Game {
     player: Player;
     nbRow:number;
 
+    //TODO rajout de la gestion de repetition de touche
     //config variable
     gravity: number;
     blockedMaxTime: number;
@@ -168,5 +169,7 @@ class Game {
         this.pause = true;
     }
 }
+
+
 
 export {Game};
