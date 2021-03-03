@@ -138,14 +138,15 @@ class Matrix {
         return true;
     }
 
-    detect() {
+    detect():number {
         let array = this.getCompleteRow();
         console.log(array);
-        // if(array.length > 0) {
-        //     for (let i = array.length-1; i >= 0; i--) {
-                
-        //     }
-        // }
+        if(array.length > 0) {
+            for (let i = array.length-1; i >= 0; i--) {
+                this.deleteRow(array[i]);
+            }
+        }
+        return array.length;
     }
 
     getCompleteRow():Array<number> {
@@ -161,6 +162,20 @@ class Matrix {
             if(flag) array.push(iRow);
         }
         return array;
+    }
+
+    deleteRow(row:number) {
+        for (let iRow = row; iRow < this.row; iRow++) {
+            if(iRow < this.row-1) {
+                for (let iCol = 0; iCol < this.col; iCol++) {
+                    this.matrix[iCol][iRow] = this.matrix[iCol][iRow+1];
+                }
+            } else {
+                for (let iCol = 0; iCol < this.col; iCol++) {
+                    this.matrix[iCol][iRow] = undefined;
+                }
+            }
+        }
     }
     
 }

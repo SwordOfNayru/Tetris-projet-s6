@@ -44,7 +44,7 @@ class Game {
         this.canExchange = true;
 
         //Physique toute les variable lié à la physique du jeu
-        this.gravity = 1; //Valeurs de distance parcouru par la pièces après une seconde.
+        this.gravity = 1.5; //Valeurs de distance parcouru par la pièces après une seconde.
         this.blockedMaxTime = 3;//Valeur en seconde avant qu'une pièce soit bloqué
         
         //Affichage
@@ -81,7 +81,7 @@ class Game {
                 this.moving(progress);
             } else if(this.register()) { //inscription de la piece
                 //TODO Verification des lignes
-                this.matrix.detect();
+                this.nbRow += this.matrix.detect();
                 this.pushNextPiece();
             } else {
                 this.defeat();
@@ -233,8 +233,8 @@ class Game {
     }
 
     pushNextPiece() {
-        this.onGoingPiece = this.reservePiece;
-        this.reservePiece = PieceGenerator.generatePiece();
+        this.onGoingPiece = this.nextPiece;
+        this.nextPiece = PieceGenerator.generatePiece();
         this.canExchange = true;
         
     }

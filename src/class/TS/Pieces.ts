@@ -13,7 +13,7 @@ class Piece {
     }
 
     //Les fonction turn permet de changer le parterne de rotation il ne verifie par si la rotation est possible.
-    turnPieceRight() {
+    turnPieceLeft() {
         if(this.rotation == 3) {
             this.rotation = 0;
         }
@@ -22,7 +22,7 @@ class Piece {
         }
         return this.rotation;
     }
-    turnPieceLeft() {
+    turnPieceRight() {
         if(this.rotation == 0) {
             this.rotation = 3;
         }
