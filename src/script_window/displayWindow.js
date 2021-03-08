@@ -1,5 +1,9 @@
 "use strict";
 ipcRenderer.on("content", function (event, arg) {
-    console.log(arg);
-    console.log(arg.matrix);
+    affichageJeu(arg, "canvas");
 });
+function affichageJeu(gameData, canvas) {
+    var canva = document.getElementById(canvas);
+    if (canva != null)
+        canva.innerHTML = gameData.matrix.col.toString();
+}

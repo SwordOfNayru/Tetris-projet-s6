@@ -1,10 +1,14 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const Game = require("./src/class/TS/Game");
+const GameData = require("./src/class/TS/Game").GameData;
 const Piece = require("./src/class/TS/Pieces");
 const Matrix = require("./src/class/TS/Matrix");
 const Display = require("./src/class/TS/Display");
 const Player = require("./src/class/TS/Player");
+console.log(Game);
 const game = new Game.Game();
+
+
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -22,6 +26,7 @@ function createWindow () {
 app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
+  game.display.frame = null;
   if (process.platform !== 'darwin') {
     app.quit()
   }
