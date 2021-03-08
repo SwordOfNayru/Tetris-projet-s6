@@ -1,5 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const Game = require("./src/class/TS/Game");
+const Piece = require("./src/class/TS/Pieces");
+const Matrix = require("./src/class/TS/Matrix");
+const Display = require("./src/class/TS/Display");
+const Player = require("./src/class/TS/Player");
 const game = new Game.Game();
 
 function createWindow () {
@@ -12,7 +16,7 @@ function createWindow () {
     frame: true
   })
 
-  win.loadFile('test.html');
+  win.loadFile('index.html');
 }
 
 app.whenReady().then(createWindow)

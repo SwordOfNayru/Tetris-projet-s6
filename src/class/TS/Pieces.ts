@@ -11,7 +11,7 @@ class Piece {
     constructor() {
         this.partern =[];
     }
-
+    //TODO Corriger les paternes des pièce S et Z
     //Les fonction turn permet de changer le parterne de rotation il ne verifie par si la rotation est possible.
     turnPieceLeft() {
         if(this.rotation == 3) {
@@ -319,6 +319,7 @@ class Z extends Piece {
 }
 
 //Class pour encapsuler la génération de piece pour eviter les problèmes de dépendance.
+//TODO génération seeder ou par tableau de piece
 class PieceGenerator {
     static PieceArray = [I,O,T,S,Z,L,J]; //On y stock les descriptions de class
 

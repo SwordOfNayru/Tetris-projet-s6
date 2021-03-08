@@ -1,7 +1,7 @@
 import {Matrix} from "./Matrix";
 import {Piece} from "./Pieces";
 import { BrowserWindow } from 'electron';
-import {Game} from "./Game";
+import {Game, GameData} from "./Game";
 
 class Display {
     //canvas: HTMLElement | null;
@@ -65,6 +65,13 @@ class Display {
     jsConsoleLog(object:any) {
         if(this.frame != null)
             this.frame.webContents.send("log", object);
+    }
+
+    sendGame(game:Game) {
+        if(this.frame != null) {
+            let gameData = game.toGameData();
+            this.frame.webContents.send("content", gameData);
+        }
     }
 }
 

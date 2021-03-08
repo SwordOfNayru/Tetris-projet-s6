@@ -3,22 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Tetris</title>
+    <!--Script pour récuperer les touches-->
+    <script src="src/script_window/keyEvent.js"></script>
+    <script src="src/script_window/displayWindow.js"></script>
 </head>
 <body>
-    <div id="Tetris">
-
-    </div>
-    <script>
-        const win = new BrowserWindow({
-            width: 800,
-            height: 600,
-            webPreferences: {
-                nodeIntegration: true
-            }
-        });
-
-        win.loadFile('test.html');
-        createWindow();
-    </script>
+    <canvas id="canvas"></canvas>
 </body>
 </html>

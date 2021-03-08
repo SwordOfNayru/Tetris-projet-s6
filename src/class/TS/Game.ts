@@ -22,7 +22,6 @@ class Game {
     canExchange: boolean;
     varLoop: NodeJS.Timeout | undefined;
 
-    //TODO rajout de la gestion de repetition de touche
     //config variable
     gravity: number;
     blockedMaxTime: number;
@@ -64,7 +63,8 @@ class Game {
         this.update(progress);
         //this.display.printCMDMatrix(this.matrix, this.onGoingPiece, this.nextPiece, this.reservePiece);
         //Ligne d'update graphique via la class Display
-        this.display.sendGameSTR(this);
+        ////this.display.sendGameSTR(this);
+        this.display.sendGame(this);
 
         this.lastUpdate = timestamp;
     }
@@ -243,8 +243,37 @@ class Game {
         this.pause = false;
         this.pause = true;
     }
+
+    toGameData():GameData {
+        return {
+            matrix: this.matrix,
+            onGoingPiece:this.onGoingPiece,
+            nextPiece: this.nextPiece,
+            reservePiece: this.reservePiece,
+            lastUpdate: this.lastUpdate,
+            continue: this.continue,
+            pause: this.pause,
+            nbRow:this.nbRow,
+            canExchange: this.canExchange,
+            gravity: this.gravity,
+            blockedMaxTime: this.blockedMaxTime
+        }
+    }
+
 }
 
+interface GameData {
+    matrix: Matrix;
+    onGoingPiece: Piece;
+    nextPiece: Piece;
+    reservePiece: Piece;
+    lastUpdate: number;
+    continue: Boolean;
+    pause: Boolean;
+    nbRow:number;
+    canExchange: boolean;
+    gravity: number;
+    blockedMaxTime: number;
+}
 
-
-export {Game};
+export {Game, GameData};
