@@ -42,10 +42,11 @@ class Game {
         this.rng.register(id);
         //Piece
         this.pieceNumber = 0;
-        this.onGoingPiece = PieceGenerator.generatePiece();
-        this.nextPiece = PieceGenerator.generatePiece();
-        this.reservePiece = PieceGenerator.generatePiece();
-
+        
+        //L'ordre est important pour les replays reserve > next > ongoing
+        this.reservePiece = this.rng.generate(this.id);
+        this.nextPiece = this.rng.generate(this.id);
+        this.onGoingPiece = this.rng.generate(this.id);
 
         this.lastUpdate = Date.now(); //Permet d'avoir le temps de la dernière update
         this.continue = true; //tant que true le jeu continue
@@ -247,7 +248,7 @@ class Game {
 
     pushNextPiece() {
         this.onGoingPiece = this.nextPiece;
-        this.nextPiece = PieceGenerator.generatePiece();
+        this.nextPiece = this.rng.generate(this.id);
         this.canExchange = true;
         
     }
