@@ -5,8 +5,10 @@ const Piece = require("./src/class/TS/Pieces");
 const Matrix = require("./src/class/TS/Matrix");
 const Display = require("./src/class/TS/Display");
 const Player = require("./src/class/TS/Player");
+const RandomTable = require("./src/class/TS/randomTable");
 console.log(Game);
-const game = new Game.Game();
+const rng = new RandomTable.RandomTable();
+const game = new Game.Game(Date.now, rng);
 
 
 

@@ -4,6 +4,7 @@ import {Display} from "./Display";
 import {Player} from "./Player";
 import {Matrix} from "./Matrix";
 import { BrowserWindow, TouchBarSlider } from 'electron';
+import {RandomTable} from "./randomTable";
 //Equivalent de la class système. 
 //
 //Avoir le jeu encapsuler dans une class permet d'en lancé plusieurs.
@@ -21,26 +22,38 @@ class Game {
     nbRow:number;
     canExchange: boolean;
     varLoop: NodeJS.Timeout | undefined;
+    pieceNumber: number;
+    id: number;
 
     //config variable
     gravity: number;
     blockedMaxTime: number;
+    rng: RandomTable;
 
 
 
-    constructor() {
+
+    constructor(id:number, rng:RandomTable) {
 
         //Data toutes les variables lié aux données
         this.matrix = new Matrix(10,20);
+        this.id = id;
+        this.rng = rng;
+        this.rng.register(id);
+        //Piece
+        this.pieceNumber = 0;
         this.onGoingPiece = PieceGenerator.generatePiece();
         this.nextPiece = PieceGenerator.generatePiece();
         this.reservePiece = PieceGenerator.generatePiece();
+
+
         this.lastUpdate = Date.now(); //Permet d'avoir le temps de la dernière update
         this.continue = true; //tant que true le jeu continue
         this.pause = false;
         this.nbRow = 0;
         this.varLoop = undefined;
         this.canExchange = true;
+        
 
         //Physique toute les variable lié à la physique du jeu
         this.gravity = 1.5; //Valeurs de distance parcouru par la pièces après une seconde.
