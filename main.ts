@@ -22,7 +22,7 @@ function createWindow () {
     frame: true
   })
 
-  win.loadFile('index.html');
+  win.loadFile('test.html');
 }
 
 app.whenReady().then(createWindow)

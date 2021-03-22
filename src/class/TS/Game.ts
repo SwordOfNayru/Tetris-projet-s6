@@ -77,8 +77,8 @@ class Game {
         this.update(progress);
         //this.display.printCMDMatrix(this.matrix, this.onGoingPiece, this.nextPiece, this.reservePiece);
         //Ligne d'update graphique via la class Display
-        ////this.display.sendGameSTR(this);
-        this.display.sendGame(this);
+        this.display.sendGameSTR(this);
+        ////this.display.sendGame(this);
 
         this.lastUpdate = timestamp;
     }
@@ -94,7 +94,6 @@ class Game {
                 this.falling(progress);
                 this.moving(progress);
             } else if(this.register()) { //inscription de la piece
-                //TODO Verification des lignes
                 this.nbRow += this.matrix.detect();
                 this.pushNextPiece();
             } else {
