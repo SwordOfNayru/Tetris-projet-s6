@@ -16,14 +16,14 @@ class Matrix {
     }
 
     /**
-     * 
+     * Initialise la matrice
      * @param col nombre de colonne
      * @param row nombre de ligne
      */
     initMatrix(col: number, row: number) {
         for (let index = 0; index < col; index++) {
             this.matrix.push(Array(row));
-            this.descColArray.push({
+            this.descColArray.push({ //?Mix trou strict(actuel) et trou simple (sans vérification des côtés) pour avoir plus de performance.
                 'height':0,
                 'diffIntCol':0, //avec la colonne précedante
                 'hole':0,
@@ -97,7 +97,7 @@ class Matrix {
      * !La vérification ne marche pas sur des chutes superieur à un bloc de distance.
      * !La Piece doit être un clone via la méthode Piece.copy().
      */
-    verifPos(piece:Piece, dX:number, dY:number, dR:number = 0) {
+    verifPos(piece:Piece, dX:number = 0, dY:number = 0, dR:number = 0) {
         piece.modPos(dX,dY);
         if(dR == 1) {
             piece.turnPieceRight();
@@ -149,6 +149,17 @@ class Matrix {
             }
         });
         return Array;
+    }
+
+    findYmat(p:Piece):number {
+        
+        p.pos.y = this.descColArray[p.pos.x < 0 ? 0 : p.pos.x].height; //On teste à la hauteur de la colonne on exclus le moyen de comblé les trou pour allez plus vite
+        
+        while(!this.verifPos(p) && p.pos.y < 23) { // teste de la position
+            p.pos.y++;
+        }
+        
+        return p.pos.y < 23 ? p.pos.y : -1; //retourne -1 si le teste se fait à la hauteur 23
     }
 
     /**

@@ -106,6 +106,10 @@ class Player {
     isExchange() {
         return this.keys.re;
     }
+
+    isFastFall() {
+        return this.keys.p;
+    }
 }
 
 //?fast fall

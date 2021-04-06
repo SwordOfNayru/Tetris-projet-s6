@@ -8,12 +8,14 @@ class Piece {
     rotation:number = 0; //La rotation va de 0 a 3. 0 est la position initial 3 celle après 3 rotation vers la droite
     color: string = "FFFFFF"; //Couleur de la piece
     blocked:number = 0;
+    id:string;
     constructor() {
         this.partern =[];
+        this.id = "P" + Date.now().toString() + Math.floor(Math.random()*10000);
     }
     //TODO Corriger les paternes des pièce S et Z
     //Les fonction turn permet de changer le parterne de rotation il ne verifie par si la rotation est possible.
-    turnPieceLeft() {
+    turnPieceRight() {
         if(this.rotation == 3) {
             this.rotation = 0;
         }
@@ -22,7 +24,7 @@ class Piece {
         }
         return this.rotation;
     }
-    turnPieceRight() {
+    turnPieceLeft() {
         if(this.rotation == 0) {
             this.rotation = 3;
         }
@@ -56,7 +58,7 @@ class Piece {
     }
 
     print():string {
-        var str = "Pos  = x : " + this.pos.x + " y : " + this.pos.y + "</br>";
+        var str = "id : "+this.id+"</br>Pos  = x : " + this.pos.x + " y : " + this.pos.y + "</br>";
         str += "blocked : " + this.blocked + "</br>";
         this.partern[this.rotation].forEach(row => {
             row.forEach(col => {
@@ -74,6 +76,7 @@ class Piece {
 
     copy():Piece {
         var piece = new Piece();
+        piece.id = this.id;
         piece.partern = this.partern;
         piece.color = this.color;
         piece.pos = {x:this.pos.x, y:this.pos.y};

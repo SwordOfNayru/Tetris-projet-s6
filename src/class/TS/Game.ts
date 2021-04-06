@@ -57,8 +57,8 @@ class Game {
         
 
         //Physique toute les variable lié à la physique du jeu
-        this.gravity = 1.5; //Valeurs de distance parcouru par la pièces après une seconde.
-        this.blockedMaxTime = 3;//Valeur en seconde avant qu'une pièce soit bloqué
+        this.gravity = 2; //Valeurs de distance parcouru par la pièces après une seconde.
+        this.blockedMaxTime = 1.5;//Valeur en seconde avant qu'une pièce soit bloqué
         
         //Affichage
         this.display = new Display();
@@ -93,6 +93,7 @@ class Game {
                 this.exchange();
                 this.falling(progress);
                 this.moving(progress);
+                this.fastFalling();
             } else if(this.register()) { //inscription de la piece
                 this.nbRow += this.matrix.detect();
                 this.pushNextPiece();
@@ -167,10 +168,21 @@ class Game {
         }
         
     }
+
+    fastFalling() {
+        if(this.player.isFastFall()) {
+            let y_tmp = this.matrix.findYmat(this.onGoingPiece.copy());
+            if(y_tmp < this.onGoingPiece.pos.y && y_tmp > -1) {
+                this.onGoingPiece.pos.y = y_tmp;
+            }
+        }
+    }
+    
     //La direction et la rotation sont gérer dans la même fonction pour économiser une copie de pièce.
     //La rotation s'effectura toujours après la rotation.
     moving(progress:number) {
         let move = this.player.isMoving(progress);
+        console.log("game move", move, this.onGoingPiece);
         let rotate = this.player.isRotate(progress);
         let deltaX = 0;
         let deltaRotation = 0;

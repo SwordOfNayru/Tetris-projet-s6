@@ -6,7 +6,7 @@ var keyArray = {
     dR: "ArrowRight",
     dL: "ArrowLeft",
     re: "KeyR",
-    p: "KeyP",
+    p: "ArrowDown",
 }; //?Voir un fichier de configuration voir une class plus complex pour gérer les touches
 /**
  * Precision sur la gestion des touches:
@@ -16,7 +16,7 @@ var keyArray = {
  * dR = decalage a droite
  * dL = decalage a gauche
  * re = reserve
- * p = pause
+ * p = pause Sert maintenance pour le fastFall pour facilité l'implémentation
  *
  * ?implementer le fast fall
  * dD = decalage vers le bas

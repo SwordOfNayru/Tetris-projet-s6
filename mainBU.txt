@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const Game = require("./src/class/TS/GameAI");
+const Game = require("./src/class/TS/Game");
 const GameData = require("./src/class/TS/Game").GameData;
 const Piece = require("./src/class/TS/Pieces");
 const Matrix = require("./src/class/TS/Matrix");
@@ -8,7 +8,7 @@ const Player = require("./src/class/TS/Player");
 const RandomTable = require("./src/class/TS/randomTable");
 console.log(Game);
 const rng = new RandomTable.RandomTable();
-const game = new Game.GameAI(Date.now, rng, {p_dic:0.5, p_hole:-10, p_maxHeight:0.2});
+const game = new Game.Game(Date.now, rng);
 
 
 
