@@ -6,8 +6,49 @@
     <!--Script pour récuperer les touches-->
     <script src="src/script_window/keyEvent.js"></script>
     <script src="src/script_window/displayWindow.js"></script>
+    <script src="main.js"></script>
+
+    <!--Feuille de style bootstrap-->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
+    <style type="text/css">
+        .row{
+            overflow: hidden;
+        }
+
+        [class*="col-"]{
+            margin-bottom: -99999px;
+            padding-bottom: 99999px;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+<div class="container-fluid">
+    <div class="row" style="margin-bottom: 20px">
+        <div class="offset-3 col-6 text-center">
+            <img src="image/tetris.png">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-4 align-self-center text-end">
+            <h1 style="margin-right: 15px">Réserve</h1>
+            <canvas id="canvasReserve"></canvas>
+        </div>
+        <div class="col-md-4 text-center">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="col-md-4">
+            <div style="margin-top: 290px">
+                <h1 style="margin-left: 5px">Suivante</h1>
+                <canvas id="canvasNext"></canvas>
+            </div>
+            <div>
+                <button id="pause" class="btn btn-success" style="width: 160px; height: 40px; margin-top: 200px" onclick="pause()">Pause</button>
+                <h5 id="nbLigne" style="margin-top: 15px"></h5>
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
