@@ -34,15 +34,9 @@
     
         function startHumain() {
             ipcRenderer.send('start-humain');
-            goGameRenderer();
         }
         function startAI() {
             ipcRenderer.send('start-ai');
-            goGameRenderer();
-        }
-
-        function quit() {
-
         }
         ipcRenderer.on('go', () => {
             self.location.href = 'index.html';
