@@ -4,8 +4,8 @@ node_modules
 src/*\.js
 src/class/*.js
 src/class/TS/*.js
+src/script_window/*.js
 build/*
 build
 main.js
 bumain.js
-build-tetris-projet-s6-win32-ia32.rar
