@@ -9,8 +9,11 @@ Vous pouvez dezipper un build téléchargeable à cette adresse :
 [Google Drive](https://drive.google.com/drive/folders/178UD6ULYxCTisP_5C1yO9bKpO1aWaag_?usp=sharing)
 
 darwin pour MacOS.
+
 Linux pour Linux.
+
 win32 pour Windows.
+
 Attention la build n'a pas été testé pour Mac et Linux.
 
 ### Le code
