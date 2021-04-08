@@ -35,3 +35,16 @@ pour installer le programme sans une build il faut passer par ces étapes :
 
 Pour l'exécuter il faut taper :
 ```npm start```
+
+## Découpage du projet
+A la racine se trouve : 
+ - index.html le fichier ou est afficher le jeu
+ - start.html le premier menu du jeu
+ - main.js le point d'entré du programme
+Dans src se trouve tout les fichiers de code lié au jeu
+Dans src/class/TS se trouve tout les classes du jeu
+Dans src/script_windows se trouve les scripts qui permet l'affichage du jeu
+
+## Ce qui n'est pas fonctionnel
+- Les decisions de l'ia
+- La génération de l'ia
