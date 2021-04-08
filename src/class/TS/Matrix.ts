@@ -92,7 +92,7 @@ class Matrix {
      * @param dX décalage X
      * @param dY décalage Y
      * @param dR décalage en Rotation positif droite negatif gauche
-     * TODO il manque le décalage de rotation.
+     * 
      * @returns Vrai si la pièce peux être emboité. Faux si la pièce ne peux pas être emboité.
      * !La vérification ne marche pas sur des chutes superieur à un bloc de distance.
      * !La Piece doit être un clone via la méthode Piece.copy().
@@ -150,6 +150,11 @@ class Matrix {
         return Array;
     }
 
+    /**
+     * Trouve la hauteur inscrivable d'une piece
+     * @param p 
+     * @returns 
+     */
     findYmat(p:Piece):number {
         
         p.pos.y = this.descColArray[p.pos.x < 0 ? 0 : p.pos.x].height; //On teste à la hauteur de la colonne on exclus le moyen de comblé les trou pour allez plus vite
@@ -179,11 +184,15 @@ class Matrix {
         return true;
     }
 
+    /**
+     * permet de lancé la vérification de ligne pleine
+     * @returns 
+     */
     detect():number {
         let array = this.getCompleteRow();
         ////console.log(array);
         if(array.length > 0) {
-            for (let i = array.length-1; i >= 0; i--) {
+            for (let i = array.length-1; i >= 0; i--) { //On parcours du haut vers le bas pour éviter le décalage de ligne pleine
                 this.deleteRow(array[i]);
             }
         }
@@ -191,6 +200,10 @@ class Matrix {
         return array.length;
     }
 
+    /**
+     * Récupère toute les lignes pleines
+     * @returns 
+     */
     getCompleteRow():Array<number> {
         let array = new Array<number>();
         for (let iRow = 0; iRow < this.row; iRow++) {
@@ -206,6 +219,10 @@ class Matrix {
         return array;
     }
 
+    /**
+     * Supprime une ligne et fait tomber les lignes au dessus
+     * @param row 
+     */
     deleteRow(row:number) {
         for (let iRow = row; iRow < this.row; iRow++) {
             if(iRow < this.row-1) {
@@ -219,7 +236,7 @@ class Matrix {
             }
         }
     }
-
+    //Lance l'évalutation de la Matrice
     eval(start:number = 0, end:number = 9):void {
         //TODO Evaluation des colonne changeante.
         for (let i = 0; i < this.col; i++) {
@@ -229,14 +246,24 @@ class Matrix {
         this.getHoles();
     }
 
+    /**
+     * Obtiens la hauteur de la colonne
+     * @param col 
+     * @returns Hauteur de la colonne
+     */
     getHeight(col:number):number {
-        for (let i = this.row-1; i >= 0; i--) {
+        for (let i = this.row-1; i >= 0; i--) { //On parcours de bas en haut pour éviter les trous
             if(this.matrix[col][i] !== undefined)
                 return i+1
         }
         return 0
     }
 
+    /**
+     * Obtient la différence inter colonne avec la colonne col-1
+     * @param col 
+     * @returns 
+     */
     getDiffInterCol(col:number):number {
         if(col == 0) return 0;
         else {
@@ -245,6 +272,9 @@ class Matrix {
     }
     //A revoir si le trou est accessible sur les côtes
     //TODO Il faut revoir le définition de trou avec une exploration d'un cavité.
+    /**
+     * Obtient les trous d'une caviter fermé
+     */
     getHoles() {
         //Init
         this.resetHoleExplore();
@@ -274,6 +304,11 @@ class Matrix {
         }
     }
 
+    /**
+     * Explore une cavité pour le compte des trous
+     * @param row 
+     * @param col 
+     */
     cavityExploration(row:number, col:number):void{
         //Init
         let exploreArray = [{'x':col,'y':row}];
@@ -335,6 +370,12 @@ class Matrix {
         }
     }
 
+    /**
+     * Vérifie sur la position c est dans array
+     * @param array 
+     * @param c 
+     * @returns 
+     */
     inExpArray(array:Array<Position>, c:Position):boolean {
         for (let i = 0; i < array.length; i++) {
             if(array[i].x == c.x && array[i].y == c.y) return true;
@@ -342,6 +383,9 @@ class Matrix {
         return false;
     }
 
+    /**
+     * Remet a zéro les valeurs pour l'éxploration
+     */
     resetHoleExplore():void {
         this.descColArray.forEach(col => {
             col.hole = 0;

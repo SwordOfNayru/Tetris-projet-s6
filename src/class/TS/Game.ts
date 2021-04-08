@@ -8,8 +8,8 @@ import {RandomTable} from "./randomTable";
 //Equivalent de la class système. 
 //
 //Avoir le jeu encapsuler dans une class permet d'en lancé plusieurs.
-//TODO : Doit pouvoir fonctionner sans interface graphique.
 class Game {
+    //Liste des variables
     matrix: Matrix;
     onGoingPiece: Piece;
     nextPiece: Piece;
@@ -88,12 +88,12 @@ class Game {
     }
     
     /**
-     * 
-     * @param progress Mis à jour du jeux physique
+     * Permet d'effectuer les mouvements
+     * @param progress ecart entre deux itération de la boucle
      */
     update(progress: number) { //*Suite de condition encapsuler les actions dans des fonctions
         if(!this.pause) {
-            if(!this.isBlocked()){
+            if(!this.isBlocked()){ //Si la pièce peut bouger
                 this.exchange();
                 this.falling(progress);
                 this.moving(progress);
@@ -102,12 +102,15 @@ class Game {
                 this.nbRow += this.matrix.detect();
                 this.gravity = this.baseGravity + (this.nbRow * this.augmentGravity);
                 this.pushNextPiece();
-            } else {
+            } else { //Defaite
                 this.defeat();
             }
         }
     }
 
+    /**
+     * Echange la pièce en cour et la pièce de réserve
+     */
     exchange() {
         if(this.player.isExchange() && this.canExchange) {
             this.canExchange = false;
@@ -142,10 +145,6 @@ class Game {
         }
     }
 
-    //!Il y a beaucoup de vérification qui se fait et un doublons une autre solution pourrait simplifier le calcule.
-    //TODO Trop de calcule pour l'ia a revoir la vérification de la piece
-    //Note rendre la vérification du côté de Matrix plus inteligente en renvoyant l'état de blocage ou en ne générant pas des doublon de bloc
-
     /**
      * Fait tomber la piece
      * @param progress nombre de ms entre deux itération de la boucle
@@ -174,6 +173,9 @@ class Game {
         
     }
 
+    /**
+     * Permet le fast falling donc faire tomber la pièce rapidement
+     */
     fastFalling() {
         if(this.player.isFastFall()) {
             let y_tmp = this.matrix.findYmat(this.onGoingPiece.copy());
@@ -185,6 +187,10 @@ class Game {
     
     //La direction et la rotation sont gérer dans la même fonction pour économiser une copie de pièce.
     //La rotation s'effectura toujours après la rotation.
+    /**
+     * Permet de bouger la pièce sur les côté
+     * @param progress ecart entre deux itération de la boucle
+     */
     moving(progress:number) {
         let move = this.player.isMoving(progress);
         ////console.log("game move", move, this.onGoingPiece);
@@ -258,6 +264,9 @@ class Game {
         this.varLoop=setInterval(() => this.loop(Date.now()),16)
     }
 
+    /**
+     * Mets en pause le jeu
+     */
     pauseGame() {
         this.pause = !this.pause;
     }
@@ -280,6 +289,10 @@ class Game {
         this.pause = true;
     }
 
+    /**
+     * Permet de d'avoir la classe avec le format de l'interface. Celà permet l'envoie par le canal IPC
+     * @returns Retourne la class sous format de l'interface GameData
+     */
     toGameData():GameData {
         return {
             matrix: this.matrix,
@@ -298,6 +311,7 @@ class Game {
 
 }
 
+//Permet de communiqué avec la fenêtre
 interface GameData {
     matrix: Matrix;
     onGoingPiece: Piece;
