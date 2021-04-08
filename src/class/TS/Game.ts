@@ -26,6 +26,8 @@ class Game {
     id: number;
 
     //config variable
+    baseGravity: number
+    augmentGravity: number
     gravity: number;
     blockedMaxTime: number;
     rng: RandomTable;
@@ -57,7 +59,9 @@ class Game {
         
 
         //Physique toute les variable lié à la physique du jeu
-        this.gravity = 2; //Valeurs de distance parcouru par la pièces après une seconde.
+        this.baseGravity = 2
+        this.augmentGravity = 0.002;
+        this.gravity = this.baseGravity; //Valeurs de distance parcouru par la pièces après une seconde.
         this.blockedMaxTime = 1.5;//Valeur en seconde avant qu'une pièce soit bloqué
         
         //Affichage
@@ -77,7 +81,7 @@ class Game {
         this.update(progress);
         //this.display.printCMDMatrix(this.matrix, this.onGoingPiece, this.nextPiece, this.reservePiece);
         //Ligne d'update graphique via la class Display
-        this.display.sendGameSTR(this);
+        this.display.sendGame(this);
         ////this.display.sendGame(this);
 
         this.lastUpdate = timestamp;
@@ -96,6 +100,7 @@ class Game {
                 this.fastFalling();
             } else if(this.register()) { //inscription de la piece
                 this.nbRow += this.matrix.detect();
+                this.gravity = this.baseGravity + (this.nbRow * this.augmentGravity);
                 this.pushNextPiece();
             } else {
                 this.defeat();
@@ -182,7 +187,7 @@ class Game {
     //La rotation s'effectura toujours après la rotation.
     moving(progress:number) {
         let move = this.player.isMoving(progress);
-        console.log("game move", move, this.onGoingPiece);
+        ////console.log("game move", move, this.onGoingPiece);
         let rotate = this.player.isRotate(progress);
         let deltaX = 0;
         let deltaRotation = 0;
@@ -257,6 +262,9 @@ class Game {
         this.pause = !this.pause;
     }
 
+    /**
+     * Génère la prochaine pièce
+     */
     pushNextPiece() {
         this.onGoingPiece = this.nextPiece;
         this.nextPiece = this.rng.generate(this.id);
@@ -264,6 +272,9 @@ class Game {
         
     }
 
+    /**
+     * Pour des testes n'est pas à utilisé dans le produit fini
+     */
     shortUnPause() {
         this.pause = false;
         this.pause = true;

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Tetris</title>
     <!--Script pour récuperer les touches-->
+    <script src="src/script_window/renderer.js"></script>
     <script src="src/script_window/keyEvent.js"></script>
     <script src="src/script_window/displayWindow.js"></script>
-    <script src="main.js"></script>
 
     <!--Feuille de style bootstrap-->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -20,35 +20,101 @@
             margin-bottom: -99999px;
             padding-bottom: 99999px;
         }
+
+        input {
+            display: none;
+        }
+        label {
+            background-color: #41e90e;
+            border-radius: 20px;
+            padding: 5px;
+            cursor: pointer;
+            border: 1px solid #41e90e;
+        }
+        label:hover {
+            border: 1px solid #36bb0e;
+        }
+
+        input:checked + label {
+            background-color: #ee7d7d;
+            border: 1px solid #ee7d7d;
+        }
+        input:checked + label:hover {
+            border: 1px solid #a53030;
+        }
+
+        #fin {
+            height: 250px;
+            width: 500px;
+
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            text-align: center;
+            vertical-align: center;
+
+            z-index: 100;
+
+            display: none;
+
+            background-color: white;
+            box-shadow: 0px 1px 0px 2000px rgba(0,0,0,0.34);
+        }
+        a:link {
+            text-decoration: none;
+        }
+        a {
+            font-weight: 300;
+            background-color: gray;
+            color: white;
+            border-radius: 20px;
+            padding: 5px;
+            margin-top: 15px;
+        }
+        a:hover {
+            color: white;
+            background-color: rgb(85, 85, 85);
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row" style="margin-bottom: 20px">
-        <div class="offset-3 col-6 text-center">
+    <div class="row justify-content-center" style="margin-bottom: 20px">
+        <div class="">
             <img src="image/tetris.png">
         </div>
     </div>
-    <div class="row ">
-        <div class="col-md-4 align-self-center text-end">
+    <div id="fin" class="">
+        <h1>
+            La partie c'est fini avec <span id="nbligne"></span> ligne(s)
+        </h1></br>
+        <a href="start.html">Menu principal</a>
+    </div>
+    <div class="row justify-content-center">
+        <div class=""  style="margin-top: 290px; margin-right: 20px">
             <h1 style="margin-right: 15px">Réserve</h1>
             <canvas id="canvasReserve"></canvas>
+            <div style="margin-top: 5px;">
+                <a href="start.html">Menu principal</a>
+            </div>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="">
             <canvas id="canvas"></canvas>
         </div>
-        <div class="col-md-4">
-            <div style="margin-top: 290px">
+        <div class="">
+            <div style="margin-top: 290px; margin-left: 20px">
                 <h1 style="margin-left: 5px">Suivante</h1>
                 <canvas id="canvasNext"></canvas>
             </div>
-            <div>
-                <button id="pause" class="btn btn-success" style="width: 160px; height: 40px; margin-top: 200px" onclick="pause()">Pause</button>
+            <div style="margin-left: 20px">
+                <input type="checkbox" id="pause" onchange="pause()"><label for="pause">pause</label>
                 <h5 id="nbLigne" style="margin-top: 15px"></h5>
             </div>
         </div>
     </div>
-
 </div>
+
 </body>
 </html>

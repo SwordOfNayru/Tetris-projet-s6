@@ -29,7 +29,7 @@ class RandomTable {
      */
     getPieceFromGameState(gamestate:GameState):Piece {
         while(gamestate.state >= this.arrayPiece.length) {
-            this.pushPiece(10);
+            this.pushPiece(1);
         }
         return this.intToPiece(this.arrayPiece[gamestate.state++]);
     }
@@ -51,6 +51,7 @@ class RandomTable {
         for (;i > 0; i--) {
             this.arrayPiece.push(PieceGenerator.getRandomInt());
         }
+        console.log(this.arrayPiece);
     }
 
     /**

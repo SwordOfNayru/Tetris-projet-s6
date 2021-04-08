@@ -1,9 +1,6 @@
-const { ipcRenderer } = require('electron'); //Ouverture de la communication
-
-
 var keyArray = {
-    rR:"KeyQ",
-    rL:"KeyE",
+    rR:"KeyE",
+    rL:"KeyQ",
     dR:"ArrowRight",
     dL:"ArrowLeft",
     re:"KeyR",

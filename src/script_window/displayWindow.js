@@ -1,6 +1,16 @@
 "use strict";
 ipcRenderer.on("content", function (event, arg) {
     affichageJeu(arg, "canvas");
+    if (!arg.continue) {
+        var span = document.getElementById("nbligne");
+        if (span != null) {
+            span.innerHTML = arg.nbRow;
+        }
+        var fin = document.getElementById('fin');
+        if (fin != null) {
+            fin.style.display = "block";
+        }
+    }
 });
 function affichageJeu(GameData, canvas) {
     // Création des canvas
@@ -169,15 +179,7 @@ function affichageJeu(GameData, canvas) {
         nombreLigne.innerHTML = "Ligne : " + GameData.nbRow;
     }
 }
-// Récupération de la valeur de pause
-var laPause = GameData.pause;
 // Fonction pour mettre le jeu en pause
 function pause() {
     ipcRenderer.send("pause");
-    if (laPause === 1) {
-        laPause = 0;
-    }
-    else {
-        laPause = 1;
-    }
 }

@@ -85,14 +85,14 @@ class AI extends Player {
     }
     
     isMoving(progress:number):string {
-        console.log("move", this.OgP.pos.x, this.bplay.destination.x);
+        //console.log("move", this.OgP.pos.x, this.bplay.destination.x);
         if(this.OgP.pos.x > this.bplay.destination.x) return "L";
         else if (this.OgP.pos.x < this.bplay.destination.x) return "R";
         else return "None";
     }
 
     isFastFall():boolean {
-        console.log("FF", this.OgP.pos.x, this.bplay.destination.x);
+        //console.log("FF", this.OgP.pos.x, this.bplay.destination.x);
         return this.OgP.pos.x == this.bplay.destination.x;
     }
 

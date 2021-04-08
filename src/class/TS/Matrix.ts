@@ -122,7 +122,6 @@ class Matrix {
         return true;
     }
 
-    //TODO implementation de la nouvelle methode avec verification par le dessus
     //Creation d'une interface bloc plus intelligeante ? avec variable audessus ?
     /**
      * 
@@ -182,12 +181,13 @@ class Matrix {
 
     detect():number {
         let array = this.getCompleteRow();
-        console.log(array);
+        ////console.log(array);
         if(array.length > 0) {
             for (let i = array.length-1; i >= 0; i--) {
                 this.deleteRow(array[i]);
             }
         }
+        this.eval();
         return array.length;
     }
 

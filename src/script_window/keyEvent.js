@@ -1,8 +1,7 @@
 "use strict";
-var ipcRenderer = require('electron').ipcRenderer; //Ouverture de la communication
 var keyArray = {
-    rR: "KeyQ",
-    rL: "KeyE",
+    rR: "KeyE",
+    rL: "KeyQ",
     dR: "ArrowRight",
     dL: "ArrowLeft",
     re: "KeyR",
@@ -18,7 +17,7 @@ var keyArray = {
  * re = reserve
  * p = pause Sert maintenance pour le fastFall pour facilité l'implémentation
  *
- * ?implementer le fast fall
+ *
  * dD = decalage vers le bas
  * dF = Fast Fall
  *

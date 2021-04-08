@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+
+    <!--Feuille de style bootstrap-->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-grid.min.css">
+    <style>
+        button {
+            background: none;
+            border: none;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 48px;
+
+            font-weight: bold;
+        }
+
+        button:hover ~ img {
+            display: block;
+        }
+
+        button ~ img {
+            height: 48px;
+            width: 32px;
+            display: none;
+        }
+    
+    </style>
+    <script src="src/script_window/renderer.js"></script>
+    <script>
+    
+        function startHumain() {
+            ipcRenderer.send('start-humain');
+            goGameRenderer();
+        }
+        function startAI() {
+            ipcRenderer.send('start-ai');
+            goGameRenderer();
+        }
+
+        function quit() {
+
+        }
+        ipcRenderer.on('go', () => {
+            self.location.href = 'index.html';
+        });
+
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center" style="margin-top: 150px; margin-bottom: 100px;">
+        <img src="image/tetris.png">
+    </div>
+    <div class="row t-3 justify-content-center flex-row-reverse">
+        <button onclick="startHumain()">Jeu Humain</button>
+        <img src="image/Selector.png" class="selector">
+    </div>
+    <div class="row t-3 justify-content-center flex-row-reverse">
+        <button onclick="startAI()">Jeu IA</button>
+        <img src="image/Selector.png" class="selector">
+    </div>
+    <div class="row t-3 justify-content-center flex-row-reverse">
+        <button onclick="window.top.close()">Quitter</button>
+        <img src="image/Selector.png" class="selector">
+    </div>
+
+    <!--
+    <div class="offset-3 col-2 text-center">
+        <button class="btn btn-success" style="width: 300px; height: 50px; margin-top: 50px" onclick="startHumain()">Jeu Humain</button>
+    </div>
+    <div class="offset-2 col-2 text-center">
+        <button class="btn btn-danger" style="width: 300px; height: 50px; margin-top: 50px" onclick="startAI()">Jeu automatique</button>
+    </div> -->
+</div>
+</body>
+</html>

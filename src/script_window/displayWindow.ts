@@ -1,5 +1,16 @@
+
 ipcRenderer.on("content", (event,arg) => {
     affichageJeu(arg,"canvas");
+    if(!arg.continue) {
+        let span = document.getElementById("nbligne")
+        if(span != null) {
+            span.innerHTML = arg.nbRow
+        }
+        let fin = document.getElementById('fin')
+        if(fin != null) {
+            fin.style.display = "block";
+        }
+    }
 });
 
 function affichageJeu(GameData:any, canvas:string) {
@@ -176,17 +187,11 @@ function affichageJeu(GameData:any, canvas:string) {
     }
 }
 
-// Récupération de la valeur de pause
-var laPause = GameData.pause;
+
 
 // Fonction pour mettre le jeu en pause
 function pause() {
     ipcRenderer.send("pause");
-    if (laPause === 1) {
-        laPause = 0;
-    } else {
-        laPause = 1;
-    }
 }
 
 
